@@ -29,7 +29,7 @@ class understoryController {
 
     static async getBookings(startDate, endDate){
         const accessToken = await this.accessToken('openid booking.read');
-        const response = await fetch(`https://api.understory.io/v1/bookings?start_date=${startDate}&end_date=${endDate}`, {
+        const response = await fetch(`https://api.understory.io/v1/bookings?from=${startDate}&to=${endDate}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,

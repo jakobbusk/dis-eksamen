@@ -6,7 +6,7 @@ class cronController {
     static async runCron(req, res){
         let bookings;
         try {
-            bookings = await understoryController.getBookings(new Date(Date.now() - 24*60*60*1000).toISOString().split('T')[0], new Date().toISOString().split('T')[0]);
+            bookings = await understoryController.getBookings(new Date(Date.now() - 60*60*1000).toISOString(), new Date().toISOString());
         } catch (error) {
             console.error("Error fetching bookings:", error);
             return res.status(500).send("Error fetching bookings");
