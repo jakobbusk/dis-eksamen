@@ -8,7 +8,7 @@ class cronController {
         const end = new Date(now.setMinutes(0, 0, 0));
         const start = new Date(end.getTime() - 60 * 60 * 1000);
         try {
-            bookings = await understoryController.getBookings(start, end);
+            const bookings = await understoryController.getBookings(start.toISOString(), end.toISOString());
             bookings.items.forEach(e => {
                 Promise.all([notifyController.sendEmail(e.customer.email, e.event_id), notifyController.sendSMS(e.customer.phone, e.event_id)])
             });
