@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pictures</title>
+    <style>
+
+  body {
+  margin: 0;
+  background-color: #111;
+  color: white;
+  font-family: sans-serif;
+  }
+
+  /* Container for all images */
+  #eventpictures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  }
+
+  /* Each image should fill its grid cell */
+  #eventpictures img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* makes the images nicely fill the box */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Add a hover zoom effect */
+  #eventpictures img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Make the gallery use full viewport height */
+  html, body {
+  height: 100%;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="eventpictures" class="row">
+</div>
+
+<script>
+// Hent eventid fra URL'en . url er /pictures/:eventid
+const urlParts = window.location.pathname.split('/');
+const eventId = urlParts[urlParts.length - 1];
+
+// Fetch pictures from server and display them
+fetch('/api/pictures/' + eventId)  // Replace '1' with the actual event ID
+  .then(response => response.json())
+  .then(data => {
+    const container = document.querySelector('#eventpictures');
+    data.pictures.forEach(url => {
+        // Create a div class column and img inside it
+        const columnDiv = document.createElement('div');
+        columnDiv.className = 'column';
+        const img = document.createElement('img');
+        img.src = url;
+        img.style.width = '100%';
+        columnDiv.appendChild(img);
+        container.appendChild(columnDiv);
+
+    });
+  })
+  .catch(error => console.error('Error fetching pictures:', error));
+</script>
+</body>
+</html>
