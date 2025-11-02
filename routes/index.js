@@ -24,6 +24,10 @@ router.get('/pictures/:eventid', function(req, res, next) {
   res.render('pictures', { title: 'Pictures' });
 })
 
+router.get('/upload/:eventid', function(req, res, next) {
+  res.render('upload', { title: 'Upload Picture' });
+});
+
 
 // Cron job
 router.get('/cron', cronController.runCron);

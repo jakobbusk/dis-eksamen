@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload billeder</title>
+</head>
+<body>
+<h1>Upload billeder</h1>
+<form id="upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required accept="image/png, image/jpeg, image/jpg">
+    <button type="submit">Upload</button>
+</form>
+<script>
+// Hent eventid fra URL'en . url er /upload/:eventid
+const urlParts = window.location.pathname.split('/');
+const eventId = urlParts[urlParts.length - 1];
+document.querySelector('#upload').action = '/api/upload/' + eventId;
+
+
+</script>
+</body>
+
+</html>

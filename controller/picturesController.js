@@ -33,7 +33,8 @@ class PicturesController {
             await fsPromises.unlink(tmpFilePath);
         }
 
-        res.status(200).json({ success: true, message: 'Picture uploaded successfully' });
+        return res.redirect(`/pictures/${eventid}`);
+
 
     }
 
