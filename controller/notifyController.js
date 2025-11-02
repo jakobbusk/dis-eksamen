@@ -1,12 +1,12 @@
 const twilio = require("twilio"); // Or, for ESM: import twilio from "twilio";
 const sgMail = require('@sendgrid/mail');
-const dotenv = require('dotenv');
-dotenv.config();
+
 
 class NotifyController {
     static async sendNotification(req, res) {
         // Implementation for sending SMS and email notifications
         const { mobile, email, eventid } = req.body;
+
 
         try {
             await Promise.all([NotifyController.sendSMS(mobile, eventid), NotifyController.sendEmail(email, eventid)]);
@@ -30,7 +30,8 @@ class NotifyController {
     const message = await client.messages.create({
         body: `Hej fra Understory!\nTak for din tilmelding til eventet med id: ${eventid}. Du kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \nVi glæder os til at se dine billeder!`,
         from: fromPhone,
-        to: to
+        to: to,
+        from: "ReLive"
     });
 
     console.log(message.body);
