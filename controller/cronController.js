@@ -4,17 +4,18 @@ const notifyController = require('./notifyController');
 class cronController {
 
     static async runCron(req, res){
-        let bookings;
+        const now = new Date();
+        const end = new Date(now.setMinutes(0, 0, 0));
+        const start = new Date(end.getTime() - 60 * 60 * 1000);
         try {
-            bookings = await understoryController.getBookings(new Date(Date.now() - 60*60*1000).toISOString(), new Date().toISOString());
+            bookings = await understoryController.getBookings(start, end);
+            bookings.items.forEach(e => {
+                Promise.all([notifyController.sendEmail(e.customer.email, e.event_id), notifyController.sendSMS(e.customer.phone, e.event_id)])
+            });
         } catch (error) {
             console.error("Error fetching bookings:", error);
             return res.status(500).send("Error fetching bookings");
         }
-        bookings.items.forEach(e => {
-            notifyController.sendEmail(e.customer.email, e.event_id);
-            notifyController.sendSMS(e.customer.phone, e.event_id);
-        });
         res.status(200).send("Cron job executed successfully");
     }
 }
