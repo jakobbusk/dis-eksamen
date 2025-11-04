@@ -8,10 +8,24 @@
 
   body {
   margin: 0;
-  background-color: #ffffff;
-  color: white;
-  font-family: sans-serif;
+  background-color: rgb(2, 44, 17);
+  color: rgb(237, 248, 134);
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
+  a {
+      color: rgb(237, 248, 134);
+      text-decoration: underline;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 10px 8px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      background: rgb(237, 248, 134);
+      color: rgb(2, 44, 17);
+    }
 
   /* Er en container for alle images */
   #eventpictures {
@@ -44,7 +58,7 @@
 </style>
 </head>
 <body>
-<a id="uploadLink">Upload billeder fra eventet</a>
+<a class="button" id="uploadLink">Upload billeder fra eventet</a>
 <div id="eventpictures" class="row">
 </div>
 
