@@ -1,8 +1,102 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  background-color: rgb(2, 44, 17);
+  color: rgb(237, 248, 134);
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+.uploadPage, .forside{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    height: 100vh;
+    text-align: center;
+}
+/*
+.logo {
+  position: fixed;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}*/
+
 a {
-  color: #00B7FF;
+  color: rgb(237, 248, 134);
+  text-decoration: underline;
+}
+
+/* Knapper og input felter */
+.button, input {
+  display: inline-block;
+  padding: 12px 20px;
+  margin: 10px 8px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  background: rgb(237, 248, 134);
+  color: rgb(2, 44, 17);
+  border: none;
+}
+
+input::placeholder {
+  color: rgba(2, 44, 17, 0.644);
+}
+
+.button:hover, input:hover, #submit_button:hover, #see_pictures:hover {
+  background: rgb(200, 220, 100);
+}
+
+#submit_button {
+  color: rgb(2, 44, 17);
+  background: rgb(237, 248, 134);
+  padding: 15px 10px;
+  border-radius: 6px;
+  font-weight: 800;
+  border: none
+}
+
+#see_pictures {
+  margin-top: 10px;
+  color: rgb(2, 44, 17);
+  background: rgb(237, 248, 134);
+  padding: 10px 10px;
+  border-radius: 6px;
+  font-weight: 800;
+  border: none
+}
+
+#see_pictures_text {
+  font-size: 20px;
+  margin-top: 100px;
+}
+
+
+/*Er en container for alle images*/
+#eventpictures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/*Hvert billede placeres indenfor dets grid cell */
+#eventpictures img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/*Hover zoom effekt*/
+#eventpictures img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+html,
+body {
+  height: 100%;
 }

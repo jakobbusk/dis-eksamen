@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body class="forside">
+    <header class="logo">
+        <img style="width:400px;" src="https://res.cloudinary.com/diseksamen/image/upload/v1762247788/event_pictures/6a1afe10abd8717b8d6a864a873d910b/fucamcuswdckensicup9.png">
+    </header>
+    <h1>Velkommen til ReLive!</h1>
+    <p>ReLive giver dig mulighed for at dele og se billeder fra dine events!</p>
+    <form id="eventForm">
+        <input type="text" placeholder="Indtast din eventkode her" id="eventCodeInput" required>
+        <button class="button" type="submit" id="goToEventButton">Gå til billeder for event</button>
+    </form>
+</body>
+<script>
+    document.querySelector('#eventForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Forhindre standard form submission
+        const eventCode = document.querySelector('#eventCodeInput').value.trim();
+        if(eventCode) {
+            // Omdiriger til pictures siden med den indtastede eventkode
+            window.location.href = '/pictures/' + encodeURIComponent(eventCode);
+        } else {
+            alert('Indtast en gyldig eventkode.');
+        }
+    });
+</script>
+</html>

@@ -30,7 +30,7 @@ class NotifyController {
     
 
         const message = await client.messages.create({
-            body: `Hej fra Understory!\nTak for din tilmelding til eventet med id: ${eventid}. Du kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \nVi glæder os til at se dine billeder!`,
+            body: `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\n\nDu kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \n\nSe billeder her: http://dis.sbusk.dev/pictures/${eventid}\n\nVi glæder os til at se dine billeder!`,
             from: fromPhone,
             to: to,
             from: "ReLive"
@@ -44,7 +44,7 @@ class NotifyController {
     static async sendEmail(email, eventid) {
         // Implementation for sending email notifications
         const subject = `Tilmelding til event med id: ${eventid}`;
-        const body = `Hej fra Understory!\nTak for din tilmelding til eventet med id: ${eventid}. Du kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \nVi glæder os til at se dine billeder!`;
+        const body = `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\nDu kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \n\nSe billeder her: http://dis.sbusk.dev/pictures/${eventid}\n\nVi glæder os til at se dine billeder!`;
         const generatedMail = emailHtml.replaceAll("%%eventid%%", eventid);
 
         // Twilio SendGrid

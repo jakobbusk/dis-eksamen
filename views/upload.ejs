@@ -4,47 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload billeder</title>
-    <style>
-        body {
-            margin: 0;
-            background-color: rgb(2, 44, 17);
-            color: rgb(237, 248, 134);
-            font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-        }
-        a {
-            color: rgb(237, 248, 134);
-            text-decoration: underline;
-        }
-        .button {
-            display: inline-block;
-            padding: 12px 20px;
-            margin: 10px 8px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            background: rgb(237, 248, 134);
-            color: rgb(2, 44, 17);
-        }
-    </style>
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-<h1>Upload billeder</h1>
+<body class="uploadPage">
+    <header class="logo">
+        <img style="width:400px;" src="https://res.cloudinary.com/diseksamen/image/upload/v1762247788/event_pictures/6a1afe10abd8717b8d6a864a873d910b/fucamcuswdckensicup9.png">
+    </header>
+<h1>Upload billeder:</h1>
 <form id="upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="image" required accept="image/png, image/jpeg, image/jpg">
-    <button type="submit">Upload</button>
+    <button id="submit_button" type="submit">Upload</button>
 </form>
+<body> 
+    <h1 id="see_pictures_text"> Se billederne fra eventet herunder: </h1>
+    <button class="button" type="submit" id="see_pictures"> Se billederne fra eventet her </button>
 <script>
 // Hent eventid fra URL'en . url er /upload/:eventid
 const urlParts = window.location.pathname.split('/');
 const eventId = urlParts[urlParts.length - 1];
 document.querySelector('#upload').action = '/api/upload/' + eventId;
 
+// Tilføj event listener til knappen "Se billederne fra eventet her", så siden redirectes til /pictures/:eventid
+document.getElementById('see_pictures').addEventListener('click', function() {
+    window.location.href = '/pictures/' + eventId;
+});
 
 </script>
 </body>
