@@ -39,5 +39,15 @@ router.post('/api/upload/:eventid', upload.single("image"), PicturesController.u
 
 router.get('/api/pictures/:eventid', PicturesController.getPictures);
 
+// Whoami route
+router.get('/api/whoami', function(req, res, next) {
+  // Server name and IP address
+  return res.status(200).json({
+    hostname: req.hostname,
+    ip: req.ip,
+    region: process.env.DO_REGION
+  });
+
+});
 
 module.exports = router;
