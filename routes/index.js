@@ -5,6 +5,7 @@ var router = express.Router();
 var cronController = require('../controller/cronController');
 const NotifyController = require('../controller/notifyController');
 const PicturesController =  require('../controller/picturesController');
+const os = require('os');
 
 
 const multer = require("multer");
@@ -43,9 +44,7 @@ router.get('/api/pictures/:eventid', PicturesController.getPictures);
 router.get('/api/whoami', function(req, res, next) {
   // Server name and IP address
   return res.status(200).json({
-    hostname: req.hostname,
-    ip: req.ip,
-    region: process.env.DO_REGION
+    hostname: os.hostname(),
   });
 
 });
