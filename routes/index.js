@@ -42,11 +42,7 @@ router.get('/api/pictures/:eventid', PicturesController.getPictures);
 
 // Whoami route
 router.get('/api/whoami', function(req, res, next) {
-  // Server name and IP address
-  return res.status(200).json({
-    hostname: os.hostname(),
-  });
-
+  return res.status(200).send(os.hostname()).setHeader('X-Hostname', os.hostname())
 });
 
 module.exports = router;
