@@ -3,10 +3,30 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var responseTime = require('response-time')
-
 var indexRouter = require('./routes/index');
+var rateLimiter = require('express-rate-limit');
+var RedisStore = require('rate-limit-redis');
+var Redis = require('ioredis');
+const dotenv = require('dotenv');
+dotenv.config();
 
 var app = express();
+
+// REF: https://expressjs.com/en/guide/behind-proxies.html
+app.set('trust proxy', 1); // sætter trust til digital ocean load balancer
+
+var redisClient = new Redis(process.env.REDIS_URL);
+
+app.use(rateLimiter({
+  windowMs: 1 * 60 * 1000,
+  max: 60, // 60 gange per minut per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  store: new RedisStore({
+    sendCommand: (...args) => redisClient.call(...args),
+  })
+}))
+
 
 app.use(responseTime())
 app.use(logger('dev'));
@@ -14,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
