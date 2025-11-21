@@ -7,10 +7,13 @@ var indexRouter = require('./routes/index');
 var rateLimiter = require('express-rate-limit');
 var RedisStore = require('rate-limit-redis');
 var Redis = require('ioredis');
+const helmet = require('helmet');
 const dotenv = require('dotenv');
 dotenv.config();
 
 var app = express();
+app.use(helmet());
+
 
 // REF: https://expressjs.com/en/guide/behind-proxies.html
 app.set('trust proxy', 1); // sætter trust til digital ocean load balancer
@@ -21,7 +24,7 @@ const limiter = rateLimiter({
   windowMs: 1 * 60 * 1000,
   limit: 1, // 60 gange per minut per IP
   standardHeaders: true,
-  legacyHeaders: true,
+  legacyHeaders: false,
   store: new RedisStore.RedisStore({
     sendCommand: (...args) => redisClient.call(...args),
   })
