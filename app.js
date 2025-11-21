@@ -22,7 +22,7 @@ app.use(rateLimiter({
   max: 60, // 60 gange per minut per IP
   standardHeaders: true,
   legacyHeaders: false,
-  store: new RedisStore({
+  store: new RedisStore.RedisStore({
     sendCommand: (...args) => redisClient.call(...args),
   })
 }))
