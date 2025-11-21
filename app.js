@@ -17,16 +17,17 @@ app.set('trust proxy', 1); // sætter trust til digital ocean load balancer
 
 var redisClient = new Redis(process.env.REDIS_URL);
 
-app.use(rateLimiter({
+const limiter = rateLimiter({
   windowMs: 1 * 60 * 1000,
-  max: 60, // 60 gange per minut per IP
+  limit: 1, // 60 gange per minut per IP
   standardHeaders: true,
-  legacyHeaders: false,
+  legacyHeaders: true,
   store: new RedisStore.RedisStore({
     sendCommand: (...args) => redisClient.call(...args),
   })
-}))
+})
 
+app.use(limiter);
 
 app.use(responseTime())
 app.use(logger('dev'));
