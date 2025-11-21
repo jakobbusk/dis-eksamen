@@ -32,7 +32,10 @@ const limiter = rateLimiter({
 
 // log ip
 app.use((req, res, next) => {
-  console.log('IP:', req.ip);
+  console.log("remoteAddress:", req.socket.remoteAddress);
+  console.log("x-forwarded-for:", req.headers["x-forwarded-for"]);
+  console.log("x-real-ip:", req.headers["x-real-ip"]);
+  console.log("req.ip:", req.ip);
   next();
 });
 
