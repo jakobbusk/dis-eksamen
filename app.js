@@ -22,7 +22,7 @@ var redisClient = new Redis(process.env.REDIS_URL);
 
 const limiter = rateLimiter({
   windowMs: 1 * 60 * 1000,
-  limit: 1, // 60 gange per minut per IP
+  limit: 60, // 60 gange per minut per IP
   standardHeaders: true,
   legacyHeaders: false,
   store: new RedisStore.RedisStore({
