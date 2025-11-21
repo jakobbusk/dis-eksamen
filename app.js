@@ -12,7 +12,31 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 var app = express();
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+
+        // Tillad billeder fra Cloudinary + self + data:
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://res.cloudinary.com",
+          "https://*.cloudinary.com"
+        ],
+
+        // Hvis I har inline <script> i EJS:
+        // (nem løsning til eksamen, men mindre sikker)
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'"
+        ],
+      },
+    },
+  })
+);
+
 
 
 // REF: https://expressjs.com/en/guide/behind-proxies.html
