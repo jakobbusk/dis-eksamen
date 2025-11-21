@@ -30,6 +30,12 @@ const limiter = rateLimiter({
   })
 })
 
+// log ip
+app.use((req, res, next) => {
+  console.log('IP:', req.ip);
+  next();
+});
+
 app.use(limiter);
 
 app.use(responseTime())
