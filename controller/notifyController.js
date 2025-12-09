@@ -18,7 +18,7 @@ class NotifyController {
         }
     }
 
-    static async sendSMS(to, eventid) {
+    static async sendSMS(to, eventid, pinCode) {
 
 
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -30,7 +30,7 @@ class NotifyController {
     
 
         const message = await client.messages.create({
-            body: `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\n\nDu kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \n\nSe billeder her: http://dis.sbusk.dev/pictures/${eventid}\n\nVi glæder os til at se dine billeder!`,
+            body: `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\n\nDin pinkode er ${pinCode}\nDu kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \n\nSe billeder her: http://dis.sbusk.dev/pictures/${eventid}\n\nVi glæder os til at se dine billeder!`,
             from: fromPhone,
             to: to,
             from: "ReLive"
@@ -41,11 +41,11 @@ class NotifyController {
     await createMessage();
     }
 
-    static async sendEmail(email, eventid) {
+    static async sendEmail(email, eventid, pinCode) {
         // Implementation for sending email notifications
         const subject = `Tilmelding til event med id: ${eventid}`;
-        const body = `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\nDu kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \n\nSe billeder her: http://dis.sbusk.dev/pictures/${eventid}\n\nVi glæder os til at se dine billeder!`;
-        const generatedMail = emailHtml.replaceAll("%%eventid%%", eventid);
+        const body = `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\nDin pinkode er ${pinCode}\nDu kan bruge følgende link, til at uploade dine billeder efter eventet: http://dis.sbusk.dev/upload/${eventid} \n\nSe billeder her: http://dis.sbusk.dev/pictures/${eventid}\n\nVi glæder os til at se dine billeder!`;
+        const generatedMail = emailHtml.replaceAll("%%eventid%%", eventid).replaceAll("%%pincode%%", pinCode);
 
         // Twilio SendGrid
 
@@ -157,7 +157,7 @@ const emailHtml = `<!doctype html>
             <td class="body">
               <p>Tak for din tilmelding til eventet med id: <strong>%%eventid%%</strong>.</p>
 
-              <p>Efter eventet kan du bruge linkene herunder til at uploade dine billeder og se de billeder, der allerede er blevet delt:</p>
+              <p>Efter eventet kan du bruge linkene herunder til at uploade dine billeder og se de billeder, der allerede er blevet delt. Din pinkode er <strong>%%pincode%%</strong></p>
 
               <p style="text-align:center;">
                 <a class="button" href="http://dis.sbusk.dev/upload/%%eventid%%" target="_blank">

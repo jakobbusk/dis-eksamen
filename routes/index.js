@@ -6,6 +6,7 @@ var cronController = require('../controller/cronController');
 const NotifyController = require('../controller/notifyController');
 const PicturesController =  require('../controller/picturesController');
 const os = require('os');
+const pin = require('../controller/pinController');
 
 
 const multer = require("multer");
@@ -18,7 +19,11 @@ const upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express', eventid: '' });
+});
+//med forudfyldt eventId
+router.get('/prefill/:eventid?', function(req, res, next) {
+  res.render('index', { title: 'Express', eventid: req.params.eventid });
 });
 
 router.get('/pictures/:eventid', function(req, res, next) {
@@ -29,16 +34,15 @@ router.get('/upload/:eventid', function(req, res, next) {
   res.render('upload', { title: 'Upload Picture' });
 });
 
-
-// Cron job
-router.get('/cron', cronController.runCron);
+//login
+router.post('/api/login', pin.login);
 
 // Send sms and email route
 router.post('/api/sendNotification', NotifyController.sendNotification);
 
-router.post('/api/upload/:eventid', upload.single("image"), PicturesController.uploadPicture);
+router.post('/api/upload/:eventid', pin.authenticatePin, upload.single("image"), PicturesController.uploadPicture);
 
-router.get('/api/pictures/:eventid', PicturesController.getPictures);
+router.get('/api/pictures/:eventid', pin.authenticatePin, PicturesController.getPictures);
 
 // Whoami route
 router.get('/api/whoami', function(req, res, next) {

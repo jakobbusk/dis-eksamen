@@ -18,8 +18,15 @@ const eventId = urlParts[urlParts.length - 1];
 document.querySelector('#uploadLink').href = '/upload/' + eventId;
 
 // Fetch pictures from server and display them
-fetch('/api/pictures/' + eventId)  // Replace '1' with the actual event ID
-  .then(response => response.json())
+fetch('/api/pictures/' + eventId)  
+  .then(response => {
+    if (response.status === 401) {
+      alert('Du skal logge ind for at se billederne for dette event.');
+      window.location.href = '/prefill/' + eventId;
+      return;
+    }
+    return response.json();
+  })
   .then(data => {
     const container = document.querySelector('#eventpictures');
     data.pictures.forEach(url => {
@@ -31,7 +38,6 @@ fetch('/api/pictures/' + eventId)  // Replace '1' with the actual event ID
         img.style.width = '100%';
         columnDiv.appendChild(img);
         container.appendChild(columnDiv);
-
     });
   })
   .catch(error => console.error('Error fetching pictures:', error));

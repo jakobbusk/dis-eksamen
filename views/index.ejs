@@ -13,19 +13,41 @@
     <h1>Velkommen til ReLive!</h1>
     <p>ReLive giver dig mulighed for at dele og se billeder fra dine events!</p>
     <form id="eventForm">
-        <input type="text" placeholder="Indtast din eventkode her" id="eventCodeInput" required>
+        <input type="text" placeholder="Indtast din eventkode her" id="eventCodeInput" value="<%= eventid || '' %>" required>
+        <input type="email" placeholder="Indtast din email" id="emailInput" required>
+        <input type="password" placeholder="Indtast pinkode" id="pinCodeInput">
         <button class="button" type="submit" id="goToEventButton">Gå til billeder for event</button>
     </form>
 </body>
-<script>
-    document.querySelector('#eventForm').addEventListener('submit', function(event) {
+<script type="module">
+    document.querySelector('#eventForm').addEventListener('submit', async function(event) {
         event.preventDefault(); // Forhindre standard form submission
         const eventCode = document.querySelector('#eventCodeInput').value.trim();
-        if(eventCode) {
+        const email = document.querySelector('#emailInput').value.trim();
+        const pinCode = document.querySelector('#pinCodeInput').value.trim();
+        if(eventCode && email && pinCode) {
+            //login
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email, pinCode: pinCode, eventId: eventCode })
+                });
+                if (!response.ok) {
+                    alert('Login mislykkedes. Tjek dine oplysninger og prøv igen.');
+                    return;
+                }
+            } catch (error) {
+                console.error('Fejl under login:', error);
+                alert('Der opstod en fejl under login. Prøv igen senere.');
+                return;
+            }
             // Omdiriger til pictures siden med den indtastede eventkode
             window.location.href = '/pictures/' + encodeURIComponent(eventCode);
         } else {
-            alert('Indtast en gyldig eventkode.');
+            alert('Indtast en gyldig eventkode, email og pinkode.');
         }
     });
 </script>
