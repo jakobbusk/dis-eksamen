@@ -5,12 +5,13 @@
 import { loadTest } from 'loadtest';
 
 const hitsPerHost = {};
+const statusCodes = {};
 
 const options = {
     url: 'https://relive.pictures/api/whoami',
-    maxSeconds: 120,        // kør i 30 sekunder
+    maxSeconds: 10,        // kør i 30 sekunder
     concurrency: 25,       // hvor mange "brugere" samtidig
-    requestsPerSecond: 110,            // evt. styr hvor hårdt I vil skyde
+    requestsPerSecond: 30,            // evt. styr hvor hårdt I vil skyde
     method: 'GET',
     keepalive: true,
 
@@ -21,8 +22,8 @@ const options = {
         }
 
         let hostname = 'unknown';
-
         try {
+
             hostname = result.body.toString().trim();
         } catch {
             // hvis det ikke er JSON, så brug body som tekst
@@ -30,6 +31,12 @@ const options = {
         }
 
         hitsPerHost[hostname] = (hitsPerHost[hostname] || 0) + 1;
+        if (statusCodes[result.statusCode]) {
+            statusCodes[result.statusCode] += 1;
+        } else {
+            statusCodes[result.statusCode] = 1;
+        }
+
     }
 };
 
@@ -54,4 +61,7 @@ loadTest(options, (err, result) => {
 
     console.log('=== Hits per hostname ===');
     console.table(hitsPerHost);
+
+    console.log('=== Status codes ===');
+    console.table(statusCodes);
 });

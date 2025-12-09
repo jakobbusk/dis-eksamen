@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var rateLimiter = require('express-rate-limit');
 var RedisStore = require('rate-limit-redis');
 var Redis = require('ioredis');
+var dbPool = require('./database/db');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -36,14 +37,13 @@ app.use(
     },
   })
 );
-
-
-
 // REF: https://expressjs.com/en/guide/behind-proxies.html
-app.set('trust proxy', 1); // sætter trust til digital ocean load balancer
+app.set('trust proxy', 1); // digital ocean load balancer
+
+// Opret pg pool og forbind til databasen
+dbPool.connectToDatabase();
 
 var redisClient = new Redis(process.env.REDIS_URL);
-
 const limiter = rateLimiter({
   windowMs: 1 * 60 * 1000,
   limit: 60, // 60 gange per minut per IP
