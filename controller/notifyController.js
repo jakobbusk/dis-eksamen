@@ -30,10 +30,10 @@ class NotifyController {
 
 
         const message = await client.messages.create({
-            body: `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\n\nDin pinkode er ${pinCode}\nDu kan se eller uploade billeder fra eventet her: https://relive.pictures/prefill/${eventid} \n\nVi glæder os til at se dine billeder!`,
+            // Relive.pictures bliver blokket af twilio, så brug dis.sbusk.dev i stedet i sms
+            body: `Hej fra ReLive x Understory!\nTak for din tilmelding til eventet med id: ${eventid}.\n\nDin pinkode er ${pinCode}\nDu kan se eller uploade billeder fra eventet her: http://dis.sbusk.dev/prefill/${eventid} \n\nVi glæder os til at se dine billeder!`,
             from: fromPhone,
             to: to,
-            from: "ReLive"
         });
 
         console.log(message.body);
