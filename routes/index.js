@@ -26,11 +26,11 @@ router.get('/prefill/:eventid?', function(req, res, next) {
   res.render('index', { title: 'Express', eventid: req.params.eventid });
 });
 
-router.get('/pictures/:eventid', function(req, res, next) {
+router.get('/pictures/:eventid', pin.authorizePin, function(req, res, next) {
   res.render('pictures', { title: 'Pictures' });
 })
 
-router.get('/upload/:eventid', function(req, res, next) {
+router.get('/upload/:eventid', pin.authorizePin, function(req, res, next) {
   res.render('upload', { title: 'Upload Picture' });
 });
 

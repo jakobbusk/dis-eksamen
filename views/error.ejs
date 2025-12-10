@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body class="forside">
+    <header class="logo">
+        <img style="width:400px;" src="https://res.cloudinary.com/diseksamen/image/upload/v1762247788/event_pictures/6a1afe10abd8717b8d6a864a873d910b/fucamcuswdckensicup9.png">
+    </header>
+    <h1>Fejl! <%= statusCode %></h1>
+    <p><%= errorMessage %></p>
+    <button class="button" id="gotBack">Gå til billeder for event</button>
+</body>
+<script type="module">
+    document.getElementById('gotBack').addEventListener('click', function() {
+        // Gå tilbage til forsiden
+        window.location.href = '/';
+    });
+</script>
+</html>

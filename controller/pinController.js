@@ -72,16 +72,16 @@ class pinController {
     static authorizePin(req, res, next) {
         const token = req.cookies.token;
         if (!token) {
-            return res.status(401).json({ message: 'Not logged in, authorization denied' });
+            return res.render('error', { statusCode: 401, errorMessage: 'Not logged in, authorization denied' });
         }
         try {
             const decoded = jwt.verify(token, jwtSecret);
             if (decoded.eventId !== req.params.eventid) {
-                return res.status(401).json({ message: 'Login not valid for this event' });
+                return res.render('error', { statusCode: 401, errorMessage: 'Login not valid for this event' });
             }
             next();
         } catch (err) {
-            res.status(401).json({ message: 'Login not valid' });
+            res.render('error', { statusCode: 401, errorMessage: 'Login not valid' });
         }
     }
 
