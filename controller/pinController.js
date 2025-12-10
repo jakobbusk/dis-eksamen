@@ -69,7 +69,7 @@ class pinController {
     }
 
     //middleware til at tjekke login status via jwt i cookie
-    static authenticatePin(req, res, next) {
+    static authorizePin(req, res, next) {
         const token = req.cookies.token;
         if (!token) {
             return res.status(401).json({ message: 'Not logged in, authorization denied' });
