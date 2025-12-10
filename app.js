@@ -43,15 +43,15 @@ app.set('trust proxy', 1); // digital ocean load balancer
 // Opret pg pool og forbind til databasen
 dbPool.connectToDatabase();
 
-var redisClient = new Redis(process.env.REDIS_URL);
+
 const limiter = rateLimiter({
   windowMs: 1 * 60 * 1000,
   limit: 60, // 60 gange per minut per IP
   standardHeaders: true,
   legacyHeaders: false,
-  store: new RedisStore.RedisStore({
-    sendCommand: (...args) => redisClient.call(...args),
-  })
+  store: process.env.REDIS_URL ? new RedisStore.RedisStore({
+    sendCommand: (...args) => new Redis(process.env.REDIS_URL).call(...args),
+  }) : undefined,
 })
 
 // log ip
