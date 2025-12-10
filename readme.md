@@ -1,5 +1,5 @@
-# How to `kør` dis-eksamen projektet lokalt
-Dette readme dokument beskriver hvordan du kan køre dis-eksamen projektet lokalt på din maskine.
+# How to kør ReLive projektet lokalt (DIS eksamensprojekt)
+Dette readme dokument beskriver hvordan du kan køre ReLive applikationen lokalt på din maskine.
 
 ## Forudsætninger
 Før du kan køre projektet, skal du have følgende
