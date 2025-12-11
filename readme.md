@@ -23,3 +23,6 @@ Før du kan køre projektet, skal du have følgende
 ### Kør cronjob
 1. Åben en terminal og naviger til projektmappen
 2. `node cronjob.js`
+
+
+Github Copilot er blevet brugt under udviklingen af projektet.
